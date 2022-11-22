@@ -14,10 +14,18 @@
 # define LSYSTEM
 
 # include <stdio.h>
+# include <stdlib.h>
+
 
 # define ERROR -1
 # define FAILURE 1
 # define SUCCESS 0
+
+typedef struct s_strplus
+{
+	char	*root;
+	char	*seek;
+} t_strplus;
 
 typedef struct s_rule
 {
@@ -35,6 +43,17 @@ typedef struct s_genus
 	t_rule	**rules;
 } t_genus;
 
+// load
+int	init_genus(t_genus *g, char **input);
 
+// utils
+size_t	ft_strlen(const char *s);
+char	*ft_strnstr(const char *big, const char *little, size_t len);
+size_t	ft_strlcpy(char *dest, const char *src, size_t size);
+
+// debug
+int	dump_rule(t_rule *r);
+int	dump_genus(t_genus *g);
+void	ft_bzero(void *s, size_t n);
 
 #endif /*lsystem*/

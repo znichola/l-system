@@ -12,7 +12,7 @@
 
 NAME = lsystem
 
-FILES = main
+FILES = main load utils debug
 
 OBJ = $(addsuffix .o, $(FILES))
 

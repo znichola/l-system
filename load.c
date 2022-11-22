@@ -44,10 +44,10 @@ int	get_rules(t_genus *g, char *r)
 	count = ft_countwords(r, ' ');
 	if (count % 2)
 		return (ERROR);
-	count = count / 2 + 1;
-	g->rules = (t_rule **)malloc(sizeof(t_rule *) * count);
-	i = 0;
-	while (i < count);
+	count = count / 2;
+	g->rules = (t_rule **)malloc(sizeof(t_rule *) * count + 1);
+	i = -1;
+	while (i++ < count - 1)
 	{
 		g->rules[i] = (t_rule *)malloc(sizeof(t_rule));
 		if (!g->rules[i])
@@ -58,10 +58,14 @@ int	get_rules(t_genus *g, char *r)
 		while (*r != ' ')
 			r++;
 		*r++ = '\0';
+		while (*r == ' ')
+			r++;
 		g->rules[i]->result = r;
+		while (*r != ' ')
+			r++;
+		*r++ = '\0';
 	}
-
-
+	g->rules[i] = NULL;
 	return (SUCCESS);
 }
 
@@ -72,6 +76,7 @@ int	init_genus(t_genus *g, char **input)
 	g->consts = input[1];
 	g->nc = ft_strlen(input[1]);
 	g->axiom = input[2];
+	// dump_genus(g);
 	if (get_rules(g, input[3]))
 		return (ERROR);
 }
