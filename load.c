@@ -12,6 +12,22 @@
 
 #include "lsystem.h"
 
+int	init_strplus(t_strplus *s)
+{
+	printf("ljksdf\n");
+	s->root = (char *)calloc(10000, sizeof(char));
+	if (!s->root)
+		return(-1);
+	s->seek = s->root;
+}
+
+int	reset_strplus(t_strplus *s, int clear)
+{
+	if (clear)
+		ft_bzero(s->root, ft_strlen(s->root));
+	s->seek = s->root;
+}
+
 static int	ft_countwords(char const *s, char const c)
 {
 	int		count;
@@ -38,16 +54,15 @@ static int	ft_countwords(char const *s, char const c)
 //		(A->AB),(B->A)
 int	get_rules(t_genus *g, char *r)
 {
-	int	count;
 	int	i;
 
-	count = ft_countwords(r, ' ');
-	if (count % 2)
+	g->nr = ft_countwords(r, ' ');
+	if (g->nr % 2)
 		return (ERROR);
-	count = count / 2;
-	g->rules = (t_rule **)malloc(sizeof(t_rule *) * count + 1);
+	g->nr = g->nr / 2;
+	g->rules = (t_rule **)malloc(sizeof(t_rule *) * g->nr + 1);
 	i = -1;
-	while (i++ < count - 1)
+	while (i++ < g->nr - 1)
 	{
 		g->rules[i] = (t_rule *)malloc(sizeof(t_rule));
 		if (!g->rules[i])

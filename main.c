@@ -25,40 +25,38 @@
 int	rule_applicator(char **src, char **ret, t_genus *g)
 {
 	int	i;
-	int	len;
+	int	j;
 
+	j = 0;
 	i = 0;
 	while (g->rules[i])
 	{
-		// printf("checking src<%c> rule<%c>\n", **src, g->rules[i]->initial[0]);
+		printf("checking src<%c> rule<%c> const<%c>\n", **src, g->rules[i]->initial[0], g->consts[j]);
 		if (g->rules[i]->initial[0] == **src)
 		{
-			// printf("applied rule:%d ", i);
-			// dump_rule(g->rules[i]); printf("\n");
-			*ret += ft_strlcpy(*ret, g->rules[i]->result, 10);
-			*src += 1;
-			return (SUCCESS);
+			printf("applied rule:%d ", i);
+			dump_rule(g->rules[i]); printf("\n");
+			int t = ft_strlcpy(*ret, g->rules[i]->result, 10);
+			printf("new ret:<%s>\n", *ret);
+			*ret += t;
+			break ;
 		}
-		i++;
+		else if (g->consts[j] == **src)
+		{
+			printf("copying const:%c\n", g->consts[j]);
+			**ret = g->consts[j];
+			*ret++;
+			break ;
+		}
+		else
+			printf("NO RULES! BIG ERROR\n");
+		if (i < g->nr)
+			i++;
+		if (j < g->nc)
+			j++;
 	}
 	*src += 1;
-	// printf("end\n");
-}
-
-int	init_strplus(t_strplus *s)
-{
-	printf("ljksdf\n");
-	s->root = (char *)calloc(10000, sizeof(char));
-	if (!s->root)
-		return(-1);
-	s->seek = s->root;
-}
-
-int	reset_strplus(t_strplus *s, int clear)
-{
-	if (clear)
-		ft_bzero(s->root, ft_strlen(s->root));
-	s->seek = s->root;
+	return (SUCCESS);
 }
 
 int main(int argc, char **argv)
@@ -77,16 +75,16 @@ int main(int argc, char **argv)
 	dump_genus(&g);
 	alice.root[0] = g.axiom[0];
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 1; i < 4; i++)
 	{
-		// printf("\n -- NEW ITTERATION --\na:<%s>\nb:<%s>\n", alice.root, bob.root);
+		printf("\n -- NEW ITTERATION --\na:<%s>\nb:<%s>\n", alice.root, bob.root);
 		while (*alice.seek)
 			rule_applicator(&alice.seek, &bob.seek, &g);
 		printf("n = %d : %s\n", i, bob.root);
-		// printf("---alice:<%s>\n---bob:<%s>\n", alice.root, bob.root);
+		printf("---alice:<%s>\n---bob:<%s>\n", alice.root, bob.root);
 		tmp = alice;
 		alice = bob;
-		bob = tmp;
+		bob = tmp;  
 		reset_strplus(&bob, 1);
 		reset_strplus(&alice, 0);
 	}

@@ -30,3 +30,6 @@ fclean : clean
 re : fclean all
 
 .PHONEY : clean, fclean, all, re
+
+# algea : ./lsystem AB "" A "A AB B A"
+# algea : ./lsystem "01" "[]" "0" "1 11 0 1[0]0"

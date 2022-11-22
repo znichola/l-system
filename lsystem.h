@@ -41,9 +41,12 @@ typedef struct s_genus
 	int		nc;
 	char	*axiom;
 	t_rule	**rules;
+	int		nr;
 } t_genus;
 
 // load
+int	init_strplus(t_strplus *s);
+int	reset_strplus(t_strplus *s, int clear);
 int	init_genus(t_genus *g, char **input);
 
 // utils
