@@ -29,7 +29,22 @@ fclean : clean
 
 re : fclean all
 
-.PHONEY : clean, fclean, all, re
+algea : all
+	./$(NAME) AB "" A "A AB B A"
 
-# algea : ./lsystem AB "" A "A AB B A"
-# algea : ./lsystem "01" "[]" "0" "1 11 0 1[0]0"
+binary : all
+	./$(NAME) 10 [] 0 "1 11 0 1[0]0"
+
+koch : all
+	./$(NAME) F +- F "F F+F-F-F+F"
+
+sierpinski : all
+	./$(NAME) FG +- F-G-G "F F-G+F+G-F G GG"
+
+
+
+.PHONEY : clean, fclean, all, re, algea, binarytree, kochcurve, sierpinski
+
+# algea			: ./lsystem AB "" A "A AB B A"
+# binary tree	: ./lsystem 10 "[]" 0 "1 11 0 1[0]0"
+# koch curve	: ./lsystem F +- "F F+F-F-F+F"
