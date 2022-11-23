@@ -31,31 +31,31 @@ int	rule_applicator(char **src, char **ret, t_genus *g)
 	i = 0;
 	while (g->rules[i])
 	{
-		printf("checking src<%c> rule<%c> const<%c>\n", **src, g->rules[i]->initial[0], g->consts[j]);
+		// printf("checking src<%c> rule<%c> const<%c>\n", **src, g->rules[i]->initial[0], g->consts[j]);
 		if (g->rules[i]->initial[0] == **src)
 		{
-			printf("applied rule:%d ", i);
-			dump_rule(g->rules[i]); printf("\n");
+			// printf("applied rule:%d ", i);
+			// dump_rule(g->rules[i]); printf("\n");
 			int t = ft_strlcpy(*ret, g->rules[i]->result, 10);
-			printf("new ret:<%s>\n", *ret);
+			// printf("new ret:<%s>\n", *ret);
 			*ret += t;
 			break ;
 		}
 		else if (g->consts[j] == **src)
 		{
-			printf("copying const:%c\n", g->consts[j]);
+			// printf("copying const:%c\n", g->consts[j]);
 			**ret = g->consts[j];
-			*ret++;
+			// printf("new ret:<%s>\n", *ret);
+			*ret += 1;
 			break ;
 		}
-		else
-			printf("NO RULES! BIG ERROR\n");
 		if (i < g->nr)
 			i++;
 		if (j < g->nc)
 			j++;
 	}
 	*src += 1;
+	// printf("end\n");
 	return (SUCCESS);
 }
 
@@ -77,11 +77,14 @@ int main(int argc, char **argv)
 
 	for (int i = 1; i < 4; i++)
 	{
-		printf("\n -- NEW ITTERATION --\na:<%s>\nb:<%s>\n", alice.root, bob.root);
+		// printf("\n -- NEW ITTERATION --\na:<%s>\nb:<%s>\n", alice.root, bob.root);
 		while (*alice.seek)
+		{
 			rule_applicator(&alice.seek, &bob.seek, &g);
+			// printf("bob:<%s>\n", bob.root);
+		}
 		printf("n = %d : %s\n", i, bob.root);
-		printf("---alice:<%s>\n---bob:<%s>\n", alice.root, bob.root);
+		// printf("---alice:<%s>\n---bob:<%s>\n", alice.root, bob.root);
 		tmp = alice;
 		alice = bob;
 		bob = tmp;  
