@@ -14,7 +14,6 @@
 
 int	init_strplus(t_strplus *s)
 {
-	printf("ljksdf\n");
 	s->root = (char *)calloc(10000, sizeof(char));
 	if (!s->root)
 		return(-1);

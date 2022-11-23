@@ -25,12 +25,13 @@ int	dump_genus(t_genus *g)
 	printf("\nvars	<%s>	n:%d\n", g->vars, g->nv);
 	printf("consts	<%s>	n:%d\n", g->consts, g->nc);
 	printf("axiom	<%s>\n", g->axiom);
+	printf("rules	");
 	i = 0;
 	while (g->rules[i])
 	{
 		dump_rule(g->rules[i++]);
 		printf(" ");
 	}
-	printf("\n");
+	printf("\n\n");
 	return (SUCCESS);
 }

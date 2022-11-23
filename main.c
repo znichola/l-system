@@ -30,13 +30,13 @@ int	rule_applicator(char **src, char **ret, t_genus *g)
 	j = 0;
 	i = 0;
 	// while (g->rules[i])
-	while (g->consts[i]) // TODO finish this condition and it should be done
+	while (i < g->nr || j < g->nc) // TODO finish this condition and it should be done
 	{
-		printf("checking src<%c> rule<%c> const<%c>\n", **src, g->rules[i]->initial[0], g->consts[j]);
+		// printf("checking src<%c> rule<%c> const<%c>\n", **src, g->rules[i]->initial[0], g->consts[j]);
 		if (g->rules[i]->initial[0] == **src)
 		{
-			printf("applied rule:%d ", i);
-			dump_rule(g->rules[i]); printf("\n");
+			// printf("applied rule:%d ", i);
+			// dump_rule(g->rules[i]); printf("\n");
 			int t = ft_strlcpy(*ret, g->rules[i]->result, 20);
 			// printf("new ret:<%s>\n", *ret);
 			*ret += t;
@@ -44,7 +44,7 @@ int	rule_applicator(char **src, char **ret, t_genus *g)
 		}
 		else if (g->consts[j] == **src)
 		{
-			printf("copying const:%c\n", g->consts[j]);
+			// printf("copying const:%c\n", g->consts[j]);
 			**ret = g->consts[j];
 			// printf("new ret:<%s>\n", *ret);
 			*ret += 1;
@@ -56,9 +56,9 @@ int	rule_applicator(char **src, char **ret, t_genus *g)
 			i++;
 		if (j < g->nc - 1)
 			j++;
-		printf("as,ldjklasdjaskld i:%d nr:%d, j:%d nc:%d\n", i, g->nr, j, g->nc);
+		// printf("as,ldjklasdjaskld i:%d nr:%d, j:%d nc:%d\n", i, g->nr, j, g->nc);
 	}
-		printf("i:%d nr:%d, j:%d nc:%d\n", i, g->nr, j, g->nc);
+		// printf("i:%d nr:%d, j:%d nc:%d\n", i, g->nr, j, g->nc);
 	*src += 1;
 	// printf("end\n");
 	return (SUCCESS);
@@ -70,23 +70,25 @@ int main(int argc, char **argv)
 	t_strplus	alice;
 	t_strplus	bob;
 	t_strplus	tmp;
+	int			depth;
 
 	init_strplus(&alice);
 	init_strplus(&bob);
 	// tmp = (char *)calloc(10000, sizeof(char));
-	if (init_genus(&g, argv + 1))
+	depth = atoi(argv[1]) + 1;
+	if (init_genus(&g, argv + 2))
 		return (-1);
-	printf("init genus finished\n");
+	// printf("init genus finished\n");
 	dump_genus(&g);
 	alice.root[0] = g.axiom[0];
 
-	for (int i = 1; i < 3; i++)
+	for (int i = 1; i < depth; i++)
 	{
-		printf("\n -- NEW ITTERATION --\na:<%s>\nb:<%s>\n", alice.root, bob.root);
+		// printf("\n -- NEW ITTERATION --\na:<%s>\nb:<%s>\n", alice.root, bob.root);
 		while (*alice.seek)
 		{
 			rule_applicator(&alice.seek, &bob.seek, &g);
-			printf("bob:<%s>\n", bob.root);
+			// printf("bob:<%s>\n", bob.root);
 		}
 		printf("n = %d : %s\n", i, bob.root);
 		// printf("---alice:<%s>\n---bob:<%s>\n", alice.root, bob.root);
